@@ -123,3 +123,53 @@
 3. （任意）Export → Windows Desktop
 
 ※ このセッションでは Godot エディタ MCP には未接続のため、エディタ上の実機確認はユーザー側で行う想定。
+
+---
+
+## 2026-07-17 — JUCE / VST3 移植
+
+### やりとり
+
+#### ユーザー
+
+> JUCEを使ってVST３プラグインにできますか？
+
+#### Agent
+
+可能である旨と、Web/Godot → JUCE API の対応表を提示。
+
+#### ユーザー
+
+> お願いします
+
+#### Agent
+
+`juce/` 配下に JUCE 8 CMake プロジェクト（VST3 + Standalone）を追加。
+
+### 実装内容
+
+| ファイル | 役割 |
+|----------|------|
+| `juce/CMakeLists.txt` | FetchContent(JUCE) + `juce_add_plugin` |
+| `juce/Source/PluginProcessor.*` | Osc/Noise/Filter/Delay + APVTS |
+| `juce/Source/PluginEditor.*` | UI |
+| `juce/Source/ScopeComponent.*` | 波形表示 |
+| `juce/README.md` | ビルド手順 |
+
+### 確認方法
+
+```powershell
+cd juce
+cmake -B build -G "Visual Studio 17 2022" -A x64
+cmake --build build --config Release
+```
+
+Standalone で鳴るか確認し、必要なら DAW に VST3 をロード。
+
+### ビルド結果（同日・この環境）
+
+Release ビルド成功:
+
+- Standalone: `juce/build/NanikaTukuruAudioLab_artefacts/Release/Standalone/NanikaTukuru Audio Lab.exe`
+- VST3: `juce/build/.../VST3/NanikaTukuru Audio Lab.vst3`
+- コピー先: `C:\Program Files\Common Files\VST3\NanikaTukuru Audio Lab.vst3`

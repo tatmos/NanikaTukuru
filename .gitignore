@@ -9,3 +9,7 @@ godot/.godot/
 godot/.import/
 godot/export/
 *.translation
+
+# JUCE
+juce/build/
+juce/_deps/

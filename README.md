@@ -1,54 +1,54 @@
 # NanikaTukuru 音響ラボ
 
-ブラウザと Godot（Windows）の両方で動くミニ音響ラボです。  
+ブラウザ・Godot・JUCE（VST3）で動くミニ音響ラボです。  
 [note 記事「元エンジニアがAIでバイブコーディングしてみた話」](https://note.com/tatmos/n/n92960b7b18da) のサンプル用リポジトリです。
 
 **Web 公開 URL（Pages 有効化後）:** https://tatmos.github.io/NanikaTukuru/
 
-## できること（Web / Godot 共通）
+## できること（各版共通）
 
 - オシレータ（sine / triangle / sawtooth / square）
 - ホワイトノイズのミックス
 - フィルタ（lowpass / highpass / bandpass）
 - ディレイ（時間・フィードバック・ウェット）
-- 波形・スペクトルのリアルタイム表示
+- 波形（＋ Web/Godot はスペクトル）表示
 
 ## フォルダ構成
 
 ```
 NanikaTukuru/
-├── index.html          # Web 公開サイト入口（GitHub Pages）
-├── css/ / js/          # Web Audio + Canvas 実装
-├── godot/              # Godot 4 移植（Windows 向け）
-│   ├── project.godot
-│   ├── scenes/
-│   ├── scripts/
-│   └── README.md
+├── index.html / css/ / js/   # Web（GitHub Pages）
+├── godot/                    # Godot 4（Windows）
+├── juce/                     # JUCE 8（VST3 + Standalone）
 ├── docs/
 │   ├── 企画書.md
 │   └── agent-log.md
 └── README.md
 ```
 
-## Web 版（GitHub Pages）
-
-フレームワークやビルドなしの静的 HTML / CSS / JS です。
+## Web 版
 
 ```bash
 python -m http.server 8080
 ```
 
-http://localhost:8080 を開きます（ES modules のため `file://` 不可）。
+http://localhost:8080 （ES modules のため `file://` 不可）
 
-Pages: Settings → Pages → `main` / `/ (root)` → https://tatmos.github.io/NanikaTukuru/
+Pages: Settings → Pages → `main` / `/ (root)`
 
-## Godot 版（Windows）
+## Godot 版
 
-1. Godot 4.2+ で `godot/project.godot` を Import
-2. F5 で実行
-3. Windows 向けエクスポート手順は [godot/README.md](godot/README.md)
+[godot/README.md](godot/README.md) — `godot/project.godot` を Import して F5
 
-技術対応表も同ファイルにあります。
+## JUCE / VST3 版
+
+[juce/README.md](juce/README.md) — CMake で VST3 と Standalone をビルド
+
+```powershell
+cd juce
+cmake -B build -G "Visual Studio 17 2022" -A x64
+cmake --build build --config Release
+```
 
 ## ドキュメント
 
