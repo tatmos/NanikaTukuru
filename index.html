@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NanikaTukuru 音響ラボ</title>
+    <meta
+      name="description"
+      content="ブラウザだけで触れるミニ音響ラボ。オシレータ・ノイズ・フィルタ・ディレイと、波形／スペクトル表示。"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;600&family=Syne:wght@700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <div class="atmosphere" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <p class="brand">NanikaTukuru</p>
+      <h1 class="headline">机の上の信号デスク</h1>
+      <p class="lede">
+        Web Audio だけで動くミニ音響ラボ。波形とスペクトルを見ながら、音を混ぜてください。
+      </p>
+    </header>
+
+    <main class="lab">
+      <section class="stage" aria-label="ビジュアライザ">
+        <canvas id="viz" width="1200" height="420"></canvas>
+        <div class="stage-meta">
+          <span id="status-label">停止中</span>
+          <span id="freq-readout">440 Hz</span>
+        </div>
+      </section>
+
+      <section class="controls" aria-label="操作パネル">
+        <div class="transport">
+          <button type="button" id="btn-play" class="btn-play">再生</button>
+          <button type="button" id="btn-stop" class="btn-stop" disabled>停止</button>
+        </div>
+
+        <fieldset class="group">
+          <legend>オシレータ</legend>
+          <label class="field">
+            <span>波形</span>
+            <select id="wave">
+              <option value="sine">sine</option>
+              <option value="triangle">triangle</option>
+              <option value="sawtooth" selected>sawtooth</option>
+              <option value="square">square</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>周波数 <output id="freq-out" for="freq">440</output> Hz</span>
+            <input id="freq" type="range" min="55" max="1760" value="440" step="1" />
+          </label>
+          <label class="field">
+            <span>オシレータ量 <output id="osc-out" for="osc-gain">0.35</output></span>
+            <input id="osc-gain" type="range" min="0" max="1" value="0.35" step="0.01" />
+          </label>
+        </fieldset>
+
+        <fieldset class="group">
+          <legend>ノイズ</legend>
+          <label class="field">
+            <span>量 <output id="noise-out" for="noise-gain">0.08</output></span>
+            <input id="noise-gain" type="range" min="0" max="0.4" value="0.08" step="0.01" />
+          </label>
+        </fieldset>
+
+        <fieldset class="group">
+          <legend>フィルタ</legend>
+          <label class="field">
+            <span>種類</span>
+            <select id="filter-type">
+              <option value="lowpass" selected>lowpass</option>
+              <option value="highpass">highpass</option>
+              <option value="bandpass">bandpass</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>カットオフ <output id="cutoff-out" for="cutoff">2400</output> Hz</span>
+            <input id="cutoff" type="range" min="80" max="12000" value="2400" step="10" />
+          </label>
+          <label class="field">
+            <span>Q <output id="q-out" for="filter-q">0.9</output></span>
+            <input id="filter-q" type="range" min="0.1" max="18" value="0.9" step="0.1" />
+          </label>
+        </fieldset>
+
+        <fieldset class="group">
+          <legend>ディレイ</legend>
+          <label class="field">
+            <span>時間 <output id="delay-out" for="delay-time">0.22</output> s</span>
+            <input id="delay-time" type="range" min="0" max="1" value="0.22" step="0.01" />
+          </label>
+          <label class="field">
+            <span>フィードバック <output id="fb-out" for="delay-fb">0.28</output></span>
+            <input id="delay-fb" type="range" min="0" max="0.85" value="0.28" step="0.01" />
+          </label>
+          <label class="field">
+            <span>ウェット <output id="wet-out" for="delay-wet">0.35</output></span>
+            <input id="delay-wet" type="range" min="0" max="1" value="0.35" step="0.01" />
+          </label>
+        </fieldset>
+
+        <fieldset class="group">
+          <legend>マスター</legend>
+          <label class="field">
+            <span>音量 <output id="master-out" for="master">0.55</output></span>
+            <input id="master" type="range" min="0" max="1" value="0.55" step="0.01" />
+          </label>
+        </fieldset>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>
+        サンプル用静的サイト —
+        <a href="https://github.com/tatmos/NanikaTukuru/blob/main/docs/%E4%BC%81%E7%94%BB%E6%9B%B8.md">企画書</a>
+        ·
+        <a href="https://github.com/tatmos/NanikaTukuru/blob/main/docs/agent-log.md">Agent 記録</a>
+        ·
+        <a href="https://github.com/tatmos/NanikaTukuru">GitHub</a>
+      </p>
+    </footer>
+
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>
