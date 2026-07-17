@@ -1,11 +1,11 @@
 # NanikaTukuru 音響ラボ
 
-ブラウザだけで動くミニ音響ラボです。  
+ブラウザと Godot（Windows）の両方で動くミニ音響ラボです。  
 [note 記事「元エンジニアがAIでバイブコーディングしてみた話」](https://note.com/tatmos/n/n92960b7b18da) のサンプル用リポジトリです。
 
-**公開 URL（Pages 有効化後）:** https://tatmos.github.io/NanikaTukuru/
+**Web 公開 URL（Pages 有効化後）:** https://tatmos.github.io/NanikaTukuru/
 
-## できること
+## できること（Web / Godot 共通）
 
 - オシレータ（sine / triangle / sawtooth / square）
 - ホワイトノイズのミックス
@@ -13,44 +13,42 @@
 - ディレイ（時間・フィードバック・ウェット）
 - 波形・スペクトルのリアルタイム表示
 
-フレームワークやビルドは使いません。GitHub Pages 向けの静的 HTML / CSS / JS です。
-
 ## フォルダ構成
 
 ```
 NanikaTukuru/
-├── index.html          # 公開サイト入口
-├── css/styles.css
-├── js/
-│   ├── main.js
-│   ├── audio-lab.js
-│   └── visualizer.js
+├── index.html          # Web 公開サイト入口（GitHub Pages）
+├── css/ / js/          # Web Audio + Canvas 実装
+├── godot/              # Godot 4 移植（Windows 向け）
+│   ├── project.godot
+│   ├── scenes/
+│   ├── scripts/
+│   └── README.md
 ├── docs/
-│   ├── 企画書.md       # 企画・スコープ
-│   └── agent-log.md    # Agent とのやり取り記録
+│   ├── 企画書.md
+│   └── agent-log.md
 └── README.md
 ```
 
-記事で触れている「企画・コード・ドキュメントを一箇所にまとめる」形の最小例です。
+## Web 版（GitHub Pages）
 
-## ローカルで見る
-
-ES modules を使っているため、`index.html` を直接ダブルクリック（`file://`）ではなく、ローカルサーバー経由で開いてください。
+フレームワークやビルドなしの静的 HTML / CSS / JS です。
 
 ```bash
-# Python がある場合
 python -m http.server 8080
 ```
 
-ブラウザで http://localhost:8080 を開きます。
+http://localhost:8080 を開きます（ES modules のため `file://` 不可）。
 
-## GitHub Pages で公開する
+Pages: Settings → Pages → `main` / `/ (root)` → https://tatmos.github.io/NanikaTukuru/
 
-1. このリポジトリを GitHub に push する
-2. GitHub → **Settings** → **Pages**
-3. **Source**: Deploy from a branch
-4. **Branch**: `main` / フォルダ `/ (root)` を選んで Save
-5. 数分待つと https://tatmos.github.io/NanikaTukuru/ で見られる
+## Godot 版（Windows）
+
+1. Godot 4.2+ で `godot/project.godot` を Import
+2. F5 で実行
+3. Windows 向けエクスポート手順は [godot/README.md](godot/README.md)
+
+技術対応表も同ファイルにあります。
 
 ## ドキュメント
 

@@ -75,3 +75,51 @@
 - GitHub の Settings → Pages で Deploy from branch: `main` / `/ (root)`
 - 別 Agent で「ドキュメントと実装の乖離チェック」や「UI 最適化」を依頼
 - プリセット（例: ざらついたパッド、細いリード）を追加する
+
+---
+
+## 2026-07-17 — Godot（Windows）移植
+
+### やりとり
+
+#### ユーザー
+
+> このアプリを Godot（Windows）でも動くように移植できますか？
+
+#### Agent
+
+可能である旨と、Web Audio → Godot API の対応表を提示。
+
+#### ユーザー
+
+> お願いします
+
+#### Agent
+
+`godot/` 配下に Godot 4 プロジェクトを追加（Web 版は維持）。
+
+### 実装内容
+
+| ファイル | 役割 |
+|----------|------|
+| `godot/project.godot` | プロジェクト設定 |
+| `godot/scenes/main.tscn` | メインシーン |
+| `godot/scripts/audio_lab.gd` | Generator + Lab バス |
+| `godot/scripts/visualizer.gd` | 波形・スペクトル |
+| `godot/scripts/main.gd` | UI |
+| `godot/README.md` | 起動・エクスポート手順 |
+| `godot/export_presets.cfg` | Windows Desktop プリセット |
+
+### 対応関係（要約）
+
+- Osc / Noise → `AudioStreamGenerator`
+- Filter / Delay / Analyser → `AudioEffect*` on bus `Lab`
+- Canvas → `Control._draw()`
+
+### 確認方法
+
+1. Godot 4.2+ で `godot/project.godot` を開く
+2. F5 で再生し、スライダー操作を確認
+3. （任意）Export → Windows Desktop
+
+※ このセッションでは Godot エディタ MCP には未接続のため、エディタ上の実機確認はユーザー側で行う想定。
